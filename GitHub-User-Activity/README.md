@@ -1,7 +1,3 @@
-Aquí tienes un ejemplo de un README para tu proyecto:
-
----
-
 # GitHub User Activity Tracker CLI
 
 This is a command-line tool built in Python that allows users to track GitHub events of a specific user, such as pushes, forks, issue creations, and more. It fetches data from the GitHub Events API and displays a summary of the activities grouped by repository.
@@ -22,12 +18,10 @@ This is a command-line tool built in Python that allows users to track GitHub ev
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/github-activity-tracker.git
-   cd github-activity-tracker
+   git clone https://github.com/icyjkk/Backend-Projects.git
+   cd GitHub-User-Activity
    ```
-
 2. **Install Python** (if not already installed):  
-   - Ensure you have Python 3.6+ installed. You can download it from [here](https://www.python.org/downloads/).
 
 3. **No additional libraries needed**:  
    The script uses only standard Python libraries (`urllib`, `json`, and `argparse`), so no external dependencies are required.
@@ -78,11 +72,3 @@ python github-activity-cli.py github-activity icyjkk
 ## Contributing
 
 If you'd like to contribute, feel free to fork the repository and submit a pull request. Make sure to include clear commit messages and ensure the code is well-tested.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-Feel free to customize this based on any additional features or information you'd like to include!
