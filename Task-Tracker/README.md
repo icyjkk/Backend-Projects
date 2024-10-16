@@ -1,5 +1,5 @@
 
-## Task Tracker CLI
+# Task Tracker CLI
 
 A simple command-line interface (CLI) for managing tasks. With this tool, you can add, update, delete, list, and mark tasks with different statuses (`todo`, `in-progress`, and `done`).
 
@@ -16,17 +16,11 @@ A simple command-line interface (CLI) for managing tasks. With this tool, you ca
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/yourusername/task-tracker-cli.git
-    cd task-tracker-cli
+    git clone https://github.com/icyjkk/Backend-Projects.git
+    cd Task-Tracker
     ```
 
-2. **Install Python dependencies** (if you have any external ones, otherwise skip this step):
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-3. **Run the CLI**:
+2. **Run the CLI**:
 
     You can run the `task-cli.py` script directly from your terminal.
 
@@ -146,12 +140,6 @@ Task ID 1 deleted successfully.
 | `mark-in-progress <id>`      | Mark the task with the given ID as `in-progress`.          |
 | `mark-done <id>`             | Mark the task with the given ID as `done`.                 |
 
-## Future Improvements
-
-- Add due dates to tasks.
-- Allow prioritization of tasks.
-- Add categories or tags to organize tasks.
-- Add support for recurring tasks.
 
 ## Contributing
 
@@ -168,8 +156,3 @@ If you'd like to contribute to this project, feel free to submit pull requests o
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 ```
 
-### Instrucciones:
-- Copia este contenido y pégalo en un archivo llamado **`README.md`** en el repositorio de tu proyecto en GitHub.
-- Si no tienes dependencias externas (no usas ningún paquete externo), puedes omitir la sección de "Install Python dependencies".
-
-Este README contiene todos los comandos y ejemplos de uso del CLI de tareas que has implementado.
