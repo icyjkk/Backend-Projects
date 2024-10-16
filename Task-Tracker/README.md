@@ -3,6 +3,8 @@
 
 A simple command-line interface (CLI) for managing tasks. With this tool, you can add, update, delete, list, and mark tasks with different statuses (`todo`, `in-progress`, and `done`).
 
+https://roadmap.sh/projects/task-tracker
+
 ## Features
 
 - **Add tasks**: Add a new task with a description.
