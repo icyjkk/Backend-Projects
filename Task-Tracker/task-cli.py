@@ -9,11 +9,11 @@ def add_command(args):
     tasks = util.load_tasks(show_message=False)
     new_id = util.obtain_next_id(tasks) # Aqui obtenemos el nuevo id, que sera el ultimo + 1
     new_task = {
-        "id": new_id,  # ID único que incrementa
-        "description": args.task,  # La descripción proporcionada por el usuario
+        "id": new_id,  # ID unico que incrementa
+        "description": args.task,  # La descripcion proporcionada por el usuario
         "status": "todo",  # Estado inicial de la tarea
-        "createdAt": datetime.now().isoformat(),  # Fecha y hora de creación (llamada correcta)
-        "updatedAt": datetime.now().isoformat()   # Fecha y hora de última actualización (llamada correcta)
+        "createdAt": datetime.now().isoformat(),  # Fecha y hora de creación 
+        "updatedAt": datetime.now().isoformat()   # Fecha y hora de última actualizacion
     }
     tasks.append(new_task) # Agregar la nueva tarea.
     util.save_tasks(tasks) #Guardar la nueva tarea.
@@ -71,6 +71,26 @@ def mark_status_command(args):
     else:
         print(f"Task with ID {args.id} not found.")
 
+def list_tasks_command(args):
+
+    tasks = util.load_tasks()  
+    if not tasks:
+        return
+
+    # Si se proporciona un estado, filtrar por ese estado
+    if args.status:
+        filtered_tasks = [task for task in tasks if task['status'] == args.status]
+        if filtered_tasks:
+            print(f"Listing tasks with status '{args.status}':")
+            for task in filtered_tasks:
+                print(f"ID: {task['id']} - Description: {task['description']} - Status: {task['status']}")
+        else:
+            print(f"No tasks found with status '{args.status}'.")
+    else:
+        # Listar todas las tareas
+        print("Listing all tasks:")
+        for task in tasks:
+            print(f"ID: {task['id']} - Description: {task['description']} - Status: {task['status']}")
 
 def main():
 # Crear el parser principal
@@ -104,6 +124,11 @@ def main():
     parser_mark_done = subparsers.add_parser('mark-done', help='Mark a task as done')
     parser_mark_done.add_argument('id', type=int, help='Task ID')
     parser_mark_done.set_defaults(func=mark_status_command, status='done')
+
+    # Comando list
+    parser_list = subparsers.add_parser('list', help='List all tasks or filter by status')
+    parser_list.add_argument('status', nargs='?', default=None, help="Filter tasks by status ('done', 'todo', 'in-progress')")
+    parser_list.set_defaults(func=list_tasks_command)
 
     # Parsear los argumentos
     args = parser.parse_args()
