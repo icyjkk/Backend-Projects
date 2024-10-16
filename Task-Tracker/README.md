@@ -1,7 +1,5 @@
-Aquí tienes el contenido del **README.md** completo, listo para que lo copies directamente:
 
-```markdown
-# Task Tracker CLI
+## Task Tracker CLI
 
 A simple command-line interface (CLI) for managing tasks. With this tool, you can add, update, delete, list, and mark tasks with different statuses (`todo`, `in-progress`, and `done`).
 
