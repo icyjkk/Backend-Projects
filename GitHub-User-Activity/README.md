@@ -2,6 +2,7 @@
 
 This is a command-line tool built in Python that allows users to track GitHub events of a specific user, such as pushes, forks, issue creations, and more. It fetches data from the GitHub Events API and displays a summary of the activities grouped by repository.
 
+https://roadmap.sh/projects/github-user-activity
 ## Features
 
 - Fetch and display GitHub user activities, including:
