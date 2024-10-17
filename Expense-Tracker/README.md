@@ -2,6 +2,7 @@
 
 This is a command-line interface (CLI) project for managing your expenses. You can add, list, update, delete, and export your expenses to a CSV file, as well as get summaries of your total expenses or filtered by month.
 
+https://roadmap.sh/projects/expense-tracker
 ## Features
 
 - **Add expenses**: Register an expense with a description and amount.
