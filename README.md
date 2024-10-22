@@ -8,3 +8,5 @@ Project ideas to take you from beginner to advanced in Backend.
 - [Expense Tracker (Begginer)](https://roadmap.sh/projects/expense-tracker)
 
 - [Number Guessing Game (Begginer)](https://roadmap.sh/projects/number-guessing-game)
+
+- [Weather API (Begginer)](https://roadmap.sh/projects/weather-api-wrapper-service)
