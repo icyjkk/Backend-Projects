@@ -1,6 +1,8 @@
 # Weather API
 
 This project is a Flask-based weather API that retrieves weather data from an external API and caches the results using Redis. To prevent abuse of the API, rate limiting is implemented using the `flask-limiter` package, which controls the number of requests allowed within a certain time period.
+
+
 ![alt text](image.png)
 
 ## Features
@@ -30,13 +32,6 @@ This project is a Flask-based weather API that retrieves weather data from an ex
 
 ```
 
-## Requirements
-
-- Python 3.10+
-- Flask
-- Redis (locally or on a cloud provider)
-- External Weather API (e.g., Visual Crossing or another weather provider)
-
 ## Installation
 
 1. **Clone the repository**:
@@ -45,18 +40,20 @@ This project is a Flask-based weather API that retrieves weather data from an ex
    cd Weather-Api
    ```
 
-2. Create a virtual environment and activate it:
+3. **Install Python** (if not already installed):  
+
+4. **Create a virtual environment and activate it**:
    ```bash
    python -m venv venv
    source venv/bin/activate   # On Windows: venv\Scripts\activate
    ```
 
-3. Install the dependencies:
+5. **Install the dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
 
-4. Set up the `.env` file with your configuration:
+6. **Set up the `.env` file with your configuration:**
    ```bash
    cp .env.example .env
    ```
@@ -66,9 +63,9 @@ This project is a Flask-based weather API that retrieves weather data from an ex
    CACHE_SECRET_KEY=your_redis_password_here
    ```
 
-5. Ensure Redis is running locally or accessible through your cloud provider. Update the Redis connection details in the `weather_service.py` file if necessary.
+7. **Ensure Redis is running locally or accessible through your cloud provider. Update the Redis connection details in the `weather_service.py` file if necessary.**
 
-6. Run the application:
+8. **Run the application:**
    ```bash
    python -m app.main
    ```
@@ -113,7 +110,6 @@ If a client exceeds these limits, they will receive a `429 Too Many Requests` re
 The API handles various errors, such as:
 - **Invalid Postal Code**: If the external API returns a 400 status for an invalid postal code.
 - **API Timeout**: If the external API doesn't respond in time.
-- **Redis Connection Errors**: If the Redis cache cannot be accessed.
 
 ## Technologies Used
 
@@ -123,3 +119,6 @@ The API handles various errors, such as:
 - **Flask-Limiter**: To implement rate limiting for the API.
 - **dotenv**: For loading environment variables from a `.env` file.
 
+## Contributing
+
+Contributions are welcome! If you have suggestions or find a bug, feel free to create an issue or submit a pull request.
