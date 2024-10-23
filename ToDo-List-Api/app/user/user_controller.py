@@ -5,10 +5,11 @@ user_bp = Blueprint('user', __name__, url_prefix='/user')
 
 @user_bp.route('/register', methods=['POST'])
 def create_user():
+    return UserService.create_user(request.json.get('name'),request.json.get('email'),request.json.get('password'))
 
-    data = request.json
-    return UserService.create_user(data.get('name'),data.get('email'),data.get('password'))
-
+@user_bp.route('/login', methods=['POST'])
+def login():
+    return UserService.login(request.json.get('email'),request.json.get('password'))
 
 @user_bp.route('/test', methods=['GET'])
 def get_test():
