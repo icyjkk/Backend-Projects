@@ -1,29 +1,10 @@
-import re
-from flask import current_app,jsonify
-from werkzeug.security import generate_password_hash,check_password_hash
-from pymongo.errors import DuplicateKeyError
-from datetime import datetime, timedelta, timezone
+from flask import current_app
 from bson.objectid import ObjectId
 from marshmallow import ValidationError
 from app.schemas.schema import PaginationSchema, TaskSchema
+from app.util.util import util
 
 class TaskService:
-
-    @staticmethod
-    def success_response(message, data=None):
-        return jsonify({
-            "status": "success",
-            "message": message,
-            "data": data
-        }), 200
-
-    @staticmethod
-    def error_response(message, errors=None, status_code=400):
-        return jsonify({
-            "status": "error",
-            "message": message,
-            "errors": errors
-        }), status_code
 
     @staticmethod
     def validate_list_tasks(request):
@@ -32,7 +13,7 @@ class TaskService:
             data = schema.load(request.args)  # Query params
             return data, None
         except ValidationError as err:
-            return None, TaskService.error_response("Validation failed", err.messages)
+            return None, util.error_response("Validation failed", err.messages)
 
     @staticmethod
     def validate_create_task(request):
@@ -41,7 +22,7 @@ class TaskService:
             data = schema.load(request.get_json())  # JSON body
             return data, None
         except ValidationError as err:
-            return None, TaskService.error_response("Validation failed", err.messages)
+            return None, util.error_response("Validation failed", err.messages)
 
     @staticmethod
     def get_test():
@@ -78,7 +59,7 @@ class TaskService:
             "description": description
         }
         
-        return TaskService.success_response("Task created successfully", created_task)
+        return util.success_response("Task created successfully", created_task,201)
 
     @staticmethod
     def list_tasks(user_id, request):
@@ -123,4 +104,4 @@ class TaskService:
             "total": total_tasks
         }
 
-        return TaskService.success_response("Tasks retrieved successfully", response)
+        return util.success_response("Tasks retrieved successfully", response)
