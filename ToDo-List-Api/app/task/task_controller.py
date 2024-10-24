@@ -7,7 +7,12 @@ task_bp = Blueprint('task', __name__, url_prefix='/task')
 @task_bp.route('/todos', methods=['POST'])
 @token_required
 def create_task(user_id):
-    return TaskService.create_task(user_id,request.json.get('title'),request.json.get('description'))
+    return TaskService.create_task(user_id,request)
+
+@task_bp.route('/todos', methods=['GET'])
+@token_required
+def list_tasks(user_id):
+    return TaskService.list_tasks(user_id,request)
 
 @task_bp.route('/test', methods=['GET'])
 def get_test():
