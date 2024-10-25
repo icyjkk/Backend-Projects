@@ -1,25 +1,26 @@
 from flask import current_app
-from werkzeug.security import generate_password_hash,check_password_hash
-from pymongo.errors import DuplicateKeyError
+from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta, timezone
 import jwt
 from marshmallow import ValidationError
-from app.schemas.schema import UserSchema,LoginSchema
+from app.schemas.schema import UserSchema, LoginSchema
 from app.util.util import util
 
 class UserService:
 
     @staticmethod
     def validate_create_user(request):
+        """Validate user registration data using UserSchema."""
         schema = UserSchema()
         try:
             validated_data = schema.load(request.get_json())
             return validated_data, None
         except ValidationError as err:
             return None, util.error_response("Validation failed", err.messages, 400)        
-   
+
     @staticmethod
     def validate_login_data(email, password):
+        """Validate login data using LoginSchema."""
         schema = LoginSchema()
         try:
             data = schema.load({"email": email, "password": password})
@@ -29,7 +30,7 @@ class UserService:
 
     @staticmethod
     def generate_jwt_token(user_id, email):
-        
+        """Generate JWT access token with a 1-hour expiration."""
         payload = {
             "user_id": user_id,  
             "email": email,
@@ -37,7 +38,8 @@ class UserService:
             "iat": datetime.now(timezone.utc)  # Issued at time
         }
 
-        secret_key = current_app.config['JWT_SECRET_KEY']  # Use your secret key from config
+        # Retrieve secret key from the app configuration
+        secret_key = current_app.config['JWT_SECRET_KEY']
 
         # Generate the JWT token
         token = jwt.encode(payload, secret_key, algorithm='HS256')
@@ -46,10 +48,12 @@ class UserService:
 
     @staticmethod
     def get_test():
+        """Simple test method to verify service functionality."""
         return "test"
 
     @staticmethod
     def create_user(data):
+        """Create a new user, validate data, hash password, and store in database."""
         # Validate user data
         validated_data, error_response = UserService.validate_create_user(data)
         if error_response:
@@ -73,15 +77,20 @@ class UserService:
         }
 
         try:
+            # Insert the new user into the database
             result = user_collection.insert_one(user_data)
+            
+            # Generate JWT token upon successful registration
             token = UserService.generate_jwt_token(str(result.inserted_id), validated_data["email"])
             return util.success_response("User created successfully", {"token": token}, 201)
         except Exception as e:
+            # Handle unexpected errors during database insertion
             return util.error_response("An unexpected error occurred.", {"details": str(e)}, 500)
 
     @staticmethod
-    def login(email,password):
-        # Validar los datos de inicio de sesión
+    def login(email, password):
+        """Authenticate user, validate credentials, and return access token."""
+        # Validate login data
         validated_data, validation_error = UserService.validate_login_data(email, password)
         if validation_error:
             return validation_error
@@ -89,18 +98,20 @@ class UserService:
         db = current_app.config['Todo_List_Bd']  
         user_collection = db.users  
 
-        #Buscar al usuario por el email
+        # Find the user by email in the database
         user = user_collection.find_one({"email": validated_data['email']})
 
         if not user:
-            return {"error": "User not found"}, 404
+            # Return error if user is not found
+            return util.error_response("User not found", None, 404)
 
-        #Verificar la contraseña usando check_password_hash
+        # Verify password using check_password_hash
         if not check_password_hash(user["password"], validated_data['password']):
-            return {"error": "Invalid password"}, 401
+            # Return error if password is incorrect
+            return util.error_response("Invalid password", None, 401)
 
-        #Si la autenticación es exitosa, generar un JWT token
+        # Generate JWT token upon successful authentication
         token = UserService.generate_jwt_token(str(user["_id"]), user["email"])
 
-        #Retornar el token en la respuesta
-        return {"message": "Login successful", "token": token}, 200
+        # Return token and success message
+        return util.success_response("Login successful", {"token": token}, 200)
