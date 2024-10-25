@@ -17,18 +17,20 @@ This project is a Flask-based weather API that retrieves weather data from an ex
 
 ```
 .
-├── app/                 
-│   └── weather/           # Weather application folder
-│       ├── __init__.py    # Initialization file
+├── app/
+│   ├── __init__.py            # Initialization file for the app
+│   ├── app.py                 # Entry point to create the Flask app and set up rate limiting
+│   ├── config.py              # Configuration settings, including API keys
+│   ├── main.py                # Main script to run the app
+│   └── weather/               # Weather application folder
+│       ├── __init__.py        # Initialization file for the weather module
 │       ├── weather_controller.py  # Controller handling API routes
-│       ├── weather_module.py      
+│       ├── weather_module.py     
 │       ├── weather_service.py     # Service handling weather data and caching
-│       ├── app.py         # Entry point to create the Flask app and set up rate limiting
-│       ├── config.py      # Configuration settings, including API keys
-│       └── main.py        # Main script to run the app
-├── .env.example          # Example environment variable file
-├── README.md             
-└── requirements.txt      # Python dependencies
+├── .env.example               # Example environment variable file
+├── README.md                  
+└── requirements.txt           # Python dependencies
+
 
 ```
 
