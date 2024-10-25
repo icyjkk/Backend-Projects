@@ -5,7 +5,7 @@ user_bp = Blueprint('user', __name__, url_prefix='/user')
 
 @user_bp.route('/register', methods=['POST'])
 def create_user():
-    return UserService.create_user(request.json.get('name'),request.json.get('email'),request.json.get('password'))
+    return UserService.create_user(request)
 
 @user_bp.route('/login', methods=['POST'])
 def login():

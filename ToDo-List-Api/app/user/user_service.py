@@ -1,37 +1,31 @@
-import re
 from flask import current_app
 from werkzeug.security import generate_password_hash,check_password_hash
 from pymongo.errors import DuplicateKeyError
 from datetime import datetime, timedelta, timezone
 import jwt
+from marshmallow import ValidationError
+from app.schemas.schema import UserSchema,LoginSchema
+from app.util.util import util
 
 class UserService:
 
     @staticmethod
-    def is_valid_email(email):
-        # use a regular expression to validate the email format
-        email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
-        return re.match(email_regex, email)
-
+    def validate_create_user(request):
+        schema = UserSchema()
+        try:
+            validated_data = schema.load(request.get_json())
+            return validated_data, None
+        except ValidationError as err:
+            return None, util.error_response("Validation failed", err.messages, 400)        
+   
     @staticmethod
-    def validate_fields(name,email,password):
-        errors = []
-
-        if not name or not isinstance(name, str):
-            errors.append("Name is required and must be a string.")
-        
-        if not email or not isinstance(email, str):
-            errors.append("Email is required and must be a string.")
-        elif not UserService.is_valid_email(email):
-            errors.append("Invalid email format.")
-        
-        if not password or not isinstance(password, str):
-            errors.append("Password is required and must be a string.")
-        elif len(password) < 6:
-            errors.append("Password must be at least 6 characters long.")
-
-        
-        return errors
+    def validate_login_data(email, password):
+        schema = LoginSchema()
+        try:
+            data = schema.load({"email": email, "password": password})
+            return data, None
+        except ValidationError as err:
+            return None, util.error_response("Validation failed", err.messages, 400)
 
     @staticmethod
     def generate_jwt_token(user_id, email):
@@ -55,56 +49,54 @@ class UserService:
         return "test"
 
     @staticmethod
-    def create_user(name,email,password):
-        #Validate the input fields
-        errors = UserService.validate_fields(name,email,password)
-        if errors:
-            return {"errors": errors}, 400
-        
-        #Check if the email already exists in the database
+    def create_user(data):
+        # Validate user data
+        validated_data, error_response = UserService.validate_create_user(data)
+        if error_response:
+            return error_response  # Return error if validation fails
+
         db = current_app.config['Todo_List_Bd']
-        user_collection = db.users  
-        existing_user = user_collection.find_one({"email": email})
+        user_collection = db.users
 
-        if existing_user:
-            return {"errors": ["Email already exists"]}, 400
+        # Check if the email already exists in the database
+        if user_collection.find_one({"email": validated_data["email"]}):
+            return util.error_response("Email already exists", None, 400)
 
-        #Hash the password before storing it
-        hashed_password = generate_password_hash(password)
+        # Hash the password
+        hashed_password = generate_password_hash(validated_data["password"])
 
-        #Create the user document to insert into MongoDB
+        # Prepare user data for insertion
         user_data = {
-            "name": name,
-            "email": email,
+            "name": validated_data["name"],
+            "email": validated_data["email"],
             "password": hashed_password
         }
 
         try:
-            #Insert the new user into the database
             result = user_collection.insert_one(user_data)
-            
-            #Generate JWT token after successful registration
-            token = UserService.generate_jwt_token(str(result.inserted_id), user_data["email"])
-
-            return {"message": "User created successfully", "token": token}, 201
-
-        except DuplicateKeyError:
-            return {"errors": ["Failed to create user, duplicate key error"]}, 500
+            token = UserService.generate_jwt_token(str(result.inserted_id), validated_data["email"])
+            return util.success_response("User created successfully", {"token": token}, 201)
+        except Exception as e:
+            return util.error_response("An unexpected error occurred.", {"details": str(e)}, 500)
 
     @staticmethod
     def login(email,password):
+        # Validar los datos de inicio de sesión
+        validated_data, validation_error = UserService.validate_login_data(email, password)
+        if validation_error:
+            return validation_error
         
         db = current_app.config['Todo_List_Bd']  
         user_collection = db.users  
 
         #Buscar al usuario por el email
-        user = user_collection.find_one({"email": email})
+        user = user_collection.find_one({"email": validated_data['email']})
 
         if not user:
             return {"error": "User not found"}, 404
 
         #Verificar la contraseña usando check_password_hash
-        if not check_password_hash(user["password"], password):
+        if not check_password_hash(user["password"], validated_data['password']):
             return {"error": "Invalid password"}, 401
 
         #Si la autenticación es exitosa, generar un JWT token

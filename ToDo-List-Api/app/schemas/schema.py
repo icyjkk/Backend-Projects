@@ -16,11 +16,59 @@ class PaginationSchema(Schema):
 class TaskSchema(Schema):
     title = fields.Str(
         required=True,
-        validate=validate.Length(min=1, error="Title cannot be empty"),
+        validate=[
+            validate.Length(min=1, error="Title cannot be empty"),
+            validate.Regexp(r'^\S+$', error="Title cannot contain only spaces")
+        ],
         error_messages={"required": "Title is required"}
     )
     description = fields.Str(
         required=True,
-        validate=validate.Length(min=1, error="Description cannot be empty"),
+        validate=[
+            validate.Length(min=1, error="Description cannot be empty"),
+            validate.Regexp(r'^\S+$', error="Description cannot contain only spaces")
+        ],
         error_messages={"required": "Description is required"}
+    )
+
+class UserSchema(Schema):
+    name = fields.Str(
+        required=True,
+        validate=[
+            validate.Length(min=1, error="Name cannot be empty"),
+            validate.Regexp(r'^\S+$', error="Name cannot contain only spaces")
+        ],
+        error_messages={"required": "Name is required"}
+    )
+    email = fields.Email(
+        required=True,
+        validate=[
+            validate.Length(min=1, error="Email cannot be empty")
+        ],
+        error_messages={"required": "Email is required", "invalid": "Invalid email format"}
+    )
+    password = fields.Str(
+        required=True,
+        validate=[
+            validate.Length(min=6, error="Password must be at least 6 characters long"),
+            validate.Regexp(r'^\S+$', error="Password cannot contain only spaces")
+        ],
+        error_messages={"required": "Password is required"}
+    )
+
+class LoginSchema(Schema):
+    email = fields.Email(
+        required=True,
+        validate=[
+            validate.Length(min=1, error="Email cannot be empty")
+        ],
+        error_messages={"required": "Email is required", "invalid": "Invalid email format"}
+    )
+    password = fields.Str(
+        required=True,
+        validate=[
+            validate.Length(min=6, error="Password must be at least 6 characters long"),
+            validate.Regexp(r'^\S+$', error="Password cannot contain only spaces")
+        ],
+        error_messages={"required": "Password is required"}
     )

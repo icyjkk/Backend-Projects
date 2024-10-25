@@ -1,6 +1,5 @@
 from flask import jsonify
 
-
 class util:
 
     @staticmethod
