@@ -10,3 +10,5 @@ Project ideas to take you from beginner to advanced in Backend.
 - [Number Guessing Game (Begginer)](https://roadmap.sh/projects/number-guessing-game)
 
 - [Weather API (Begginer)](https://roadmap.sh/projects/weather-api-wrapper-service)
+
+- [Todo List API (Begginer)](https://roadmap.sh/projects/todo-list-api)
