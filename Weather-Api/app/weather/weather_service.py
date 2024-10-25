@@ -1,22 +1,17 @@
 import requests
 from flask import current_app
-import redis
 import json
 
 class WeatherService:
 
     @staticmethod
     def get_weather_data(postal_code):
-        # Connect to Redis
-        r = redis.Redis(
-            host='redis-10462.c339.eu-west-3-1.ec2.redns.redis-cloud.com',
-            port=10462,
-            password=current_app.config['CACHE_SECRET_KEY']
-        )
         
+        redis_client = current_app.config['redis_client']
+
         # Check if the postal code is in the cache
         print(f"Checking cache for postal code: {postal_code}")
-        cached_data = r.get(postal_code)
+        cached_data = redis_client.get(postal_code)
         
         if cached_data:
             # If the data is in the cache, return it from there
@@ -30,7 +25,7 @@ class WeatherService:
             # If the response is valid, store it in the cache for 12 hours (43200 seconds)
             if "error" not in weather_data:
                 print("Storing data in cache for 12 hours.")
-                r.setex(postal_code, 43200, json.dumps(weather_data))  # 12 hours = 43200 seconds
+                redis_client.setex(postal_code, 43200, json.dumps(weather_data))  # 12 hours = 43200 seconds
 
             return weather_data
         
