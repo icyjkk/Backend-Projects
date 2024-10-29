@@ -34,7 +34,7 @@ This project implements a caching proxy server in Python. The server receives re
    ```bash
    cp .env.example .env
    ```
-   To ensure the proxy functions correctly, make sure Redis is configured. You can customize the environment variables in the `.env` file to set up the Redis connection, cache duration, and other settings.
+   To ensure the proxy functions correctly, make sure Redis is configured. You can customize the environment variables in the `.env` file to set up the Redis connection.
    ```env
    CACHE_SECRET_KEY=your_redis_password_here
    REDIS_HOST=your_redis_host_here
@@ -86,6 +86,3 @@ python main.py clear-cache
 
 Contributions are welcome! If you have suggestions or find a bug, feel free to create an issue or submit a pull request.
 
---- 
-
-This README provides clear instructions in English for installation, usage, technologies used, and contribution guidelines.

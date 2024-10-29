@@ -12,3 +12,5 @@ Project ideas to take you from beginner to advanced in Backend.
 - [Weather API (Begginer)](https://roadmap.sh/projects/weather-api-wrapper-service)
 
 - [Todo List API (Begginer)](https://roadmap.sh/projects/todo-list-api)
+
+- [Caching Proxy (intermediate)](https://roadmap.sh/projects/caching-server)
