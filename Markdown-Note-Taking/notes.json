@@ -1,0 +1,8 @@
+[
+    {
+        "id": "c223b6d0-026f-44a0-a4dd-c4e373faa7c1",
+        "filename": "markdown_text.md",
+        "content": "# Backend-Projects\r\nProject ideas to take you from beginner to advanced in Backend.\r\n\r\n- [Task-tracker (Begginer)](https://roadmap.sh/projects/task-tracker): Build a CLI app to track your tasks and manage your to-do list.\r\n\r\n- [GitHub User Activity (Begginer)](https://roadmap.sh/projects/github-user-activity): Use GitHub API to fetch user activity and display it in the terminal.\r\n\r\n- [Expense Tracker (Begginer)](https://roadmap.sh/projects/expense-tracker): Build a simple expense tracker to manage your finances.\r\n\r\n- [Number Guessing Game (Begginer)](https://roadmap.sh/projects/number-guessing-game): Build a simple number guessing game to test your luck.\r\n\r\n- [Weather API (Begginer)](https://roadmap.sh/projects/weather-api-wrapper-service): Build a weather API that fetches and returns weather data.\r\n\r\n- [Todo List API (Begginer)](https://roadmap.sh/projects/todo-list-api): Build a RESTful API to allow users to manage their to-do list.\r\n\r\n- [Caching Proxy (Intermediate)](https://roadmap.sh/projects/caching-server): Build a caching server that caches responses from other servers.\r\n",
+        "created_at": "2024-11-05T19:51:05.606269"
+    }
+]
