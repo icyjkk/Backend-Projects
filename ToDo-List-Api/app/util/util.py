@@ -5,19 +5,19 @@ class util:
     @staticmethod
     def success_response(message, data=None, status_code=200):
         """
-        Genera una respuesta de éxito en formato JSON.
+        Generates a successful JSON response.
         
-        :param message: Mensaje que describe la operación exitosa.
-        :param data: Datos opcionales que se devolverán en la respuesta.
-        :param status_code: Código de estado HTTP (por defecto es 200).
-        :return: Respuesta JSON con estructura consistente.
+        :param message: Message describing the successful operation.
+        :param data: Optional data to include in the response.
+        :param status_code: HTTP status code (default is 200).
+        :return: Consistent JSON response structure.
         """
         response = {
             "status": "success",
             "message": message
         }
 
-        # Solo incluir el campo "data" si no es None
+        # Only include the "data" field if it is not None
         if data is not None:
             response["data"] = data
 
@@ -26,19 +26,19 @@ class util:
     @staticmethod
     def error_response(message, errors=None, status_code=400):
         """
-        Genera una respuesta de error en formato JSON.
+        Generates an error JSON response.
         
-        :param message: Mensaje que describe el error.
-        :param errors: Detalles opcionales sobre el error (puede ser un dict o lista).
-        :param status_code: Código de estado HTTP (por defecto es 400).
-        :return: Respuesta JSON con estructura consistente.
+        :param message: Message describing the error.
+        :param errors: Optional details about the error (can be a dict or list).
+        :param status_code: HTTP status code (default is 400).
+        :return: Consistent JSON response structure with error information.
         """
         response = {
             "status": "error",
             "message": message
         }
 
-        # Solo incluir el campo "errors" si contiene información válida
+        # Only include the "errors" field if it contains valid information
         if errors:
             response["errors"] = errors
 
