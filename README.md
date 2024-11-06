@@ -14,3 +14,5 @@ Project ideas to take you from beginner to advanced in Backend.
 - [Todo List API (Begginer)](https://roadmap.sh/projects/todo-list-api): Build a RESTful API to allow users to manage their to-do list.
 
 - [Caching Proxy (Intermediate)](https://roadmap.sh/projects/caching-server): Build a caching server that caches responses from other servers.
+
+-[Markdown Note-taking App (Intermediate)](https://roadmap.sh/projects/markdown-note-taking-app): Build a note-taking app that uses markdown for formatting.
