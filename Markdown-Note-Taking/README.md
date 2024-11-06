@@ -16,10 +16,10 @@ This project is a note-taking application that allows users to upload Markdown f
 ```
 .
 ├── app/
-│   ├── user/                          # Notes-related functionality
-│   │   ├── user_service.py            # Business logic for notes operations 
-│   │   ├── user_module.py             
-│   │   └── user_controller.py         # Routes and endpoints for notes-related actions
+│   ├── note/                          # Notes-related functionality
+│   │   ├── note_service.py            # Business logic for notes operations 
+│   │   ├── note_module.py             
+│   │   └── note_controller.py         # Routes and endpoints for notes-related actions
 │   ├── schemas/                       # Schema definitions for data validation
 │   │   └── schema.py                  # Schema classes for request data validation (Marshmallow)
 │   ├── util/                          # Utility functions and helpers
@@ -76,58 +76,51 @@ This project is a note-taking application that allows users to upload Markdown f
 | Method | Endpoint                      | Description                                            |
 |--------|-------------------------------|--------------------------------------------------------|
 | POST   | `/note/check-grammar`         | Checks and corrects the grammar of a note in Markdown  |
-| POST   | `/note/save-note`             | Saves a note in Markdown format                        |
+| POST   | `/note/save-note`             | Saves a note passed as Markdown text or .md file.      |
 | GET    | `/note/list-notes`            | Lists all saved notes                                  |
 | GET    | `/note/render-note/<note_id>` | Returns the note rendered in HTML                      |
 
 ### Example Requests
-#### Register
 ```json
-POST /user/register
+POST /note/check-grammar
 {
-  "name": "John Doe",
-  "email": "john@example.com",
-  "password": "securepassword"
+  "note":"#Mi Título\nEste es el contenio de la nota en Markdown.",
+  "language": "es" 
 }
 ```
-
-#### Login
 ```json
-POST /user/login
+RESPONSE:
 {
-  "email": "john@example.com",
-  "password": "securepassword"
+    "data": {
+        "detectedLanguage": "Spanish",
+        "language": "Spanish",
+        "matches": [
+            {
+                "errorType": "misspelling",
+                "length": 8,
+                "message": "Se ha encontrado un posible error ortográfico.",
+                "offset": 21,
+                "replacements": [
+                    "contenido",
+                    "contenía",
+                    "convenio",
+                    "contento",
+                    "contentó",
+                    "contendió",
+                    "congenió",
+                    "congenio",
+                    "contengo",
+                    "contenlo"
+                ],
+                "sentence": "Mi Título\nEste es el contenio de la nota en Markdown.",
+                "shortMessage": "Error de ortografía"
+            }
+        ]
+    },
+    "message": "Grammar check completed successfully",
+    "status": "success"
 }
 ```
-
-#### Create Task
-```json
-POST /task/todos
-{
-  "title": "Buy groceries",
-  "description": "Milk, eggs, bread"
-}
-```
-
-## Error Handling
-
-The API returns errors in the following JSON format:
-```json
-{
-  "status": "error",
-  "message": "Description of the error",
-  "errors": {
-    "field": "Details about the error"
-  }
-}
-```
-
-Common status codes:
-- `400` - Bad Request
-- `401` - Unauthorized
-- `403` - Forbidden
-- `404` - Not Found
-- `500` - Internal Server Error
 
 ## Technologies Used
 
