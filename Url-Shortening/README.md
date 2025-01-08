@@ -1,6 +1,7 @@
 # URL Shortening Service
 
 This is a URL shortening service developed with Python that allows converting long URLs into short, easy-to-share codes.
+![image](https://github.com/user-attachments/assets/f90b9620-5b0d-4df7-953d-5ec3770e7cce)
 
 ## 🚀 Features
 
@@ -9,73 +10,80 @@ This is a URL shortening service developed with Python that allows converting lo
 - URL validation
 - Original URL redirection
 - RESTful API
-
+---
 ## 🛠️ Technologies
 
 - Python
 - Flask
 - MongoDB
-
+---
 ## 📋 Prerequisites
 
 - Python 3.x
 - MongoDB
 - pip (Python package manager)
-
+---
 ## ⚙️ Installation
 
-1. Clona el repositorio:
+1. Clone repository:
 ```bash
-git clone https://github.com/tu-usuario/url-shortening.git
-cd url-shortening
+git clone https://github.com/icyjkk/Backend-Projects.git
+cd Url-Shortening
 ```
 
-2. Instala las dependencias:
+2. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Configura las variables de entorno:
+3. Configure .env file:
 ```bash
-cp .env.example .env
-# Edita el archivo .env con tus configuraciones
+DEBUG=True
+RATE_LIMITS="5 per second; 10 per minute; 100 per hour; 1000 per day"
+MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/todo_db
+```
+---
+## 🚀 Run project
+```bash
+py -m app.main
 ```
 
-## 🚀 Uso
-
-1. Inicia el servidor:
-```bash
-python run.py
-```
-
-2. La API estará disponible en `http://localhost:5000`
-
+2. You can see it at `http://localhost:5000`
+---
 ## 📌 Endpoints
 
-### Acortar URL
+### Short URL
 ```http
-POST /api/v1/urls
+POST /url/shorten
 Content-Type: application/json
 
 {
     "url": "https://www.ejemplo-url-larga.com"
 }
 ```
-
-### Obtener URL Original
+### Retrieve URL
 ```http
-GET /api/v1/urls/{shortCode}
+GET /url/shorten/{shortCode}
 ```
 
-### Actualizar URL
+### Update URL
 ```http
-PUT /api/v1/urls/{shortCode}
+PUT /url/shorten/{shortCode}
 Content-Type: application/json
 
 {
     "url": "https://www.nueva-url.com"
 }
 ```
-
-
+### Delete URL
+```http
+DELETE /url/shorten/{shortCode}
 ```
+### Get Stats
+```http
+GET /url/shorten/{shortCode}/stats
+```
+---
+## Contributing
+
+Contributions are welcome! If you have suggestions or find a bug, feel free to create an issue or submit a pull request.
