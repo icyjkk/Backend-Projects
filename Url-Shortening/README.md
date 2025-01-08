@@ -18,7 +18,6 @@ This is a URL shortening service developed with Python that allows converting lo
 - MongoDB
 ---
 ## 📋 Prerequisites
-
 - Python 3.x
 - MongoDB
 - pip (Python package manager)
