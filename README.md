@@ -18,3 +18,5 @@ Project ideas to take you from beginner to advanced in Backend.
 - [Markdown Note-taking App (Intermediate)](https://roadmap.sh/projects/markdown-note-taking-app): Build a note-taking app that uses markdown for formatting.
 
 - [URL Shortening Service (Intermediate)](https://roadmap.sh/projects/url-shortening-service): Build a URL Shortener API that helps shorten long URLs.
+
+- [Broadcast server (Intermediate)](https://roadmap.sh/projects/broadcast-server): Build a server that can broadcast messages to connected clients.
